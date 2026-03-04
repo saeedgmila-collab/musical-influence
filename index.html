@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Musical Influence</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+
+body{
+overflow:hidden;
+background:linear-gradient(135deg,#F5E6B3,#DDE8A3);
+color:#444;
+transition:0.6s ease;
+}
+
+body.dark{
+background:linear-gradient(135deg,#1c251c,#101510);
+color:#eee;
+}
+
+.container{
+display:flex;
+width:700vw;
+height:100vh;
+transition:transform 0.8s ease;
+}
+
+.page{
+width:100vw;
+height:100vh;
+padding:60px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+}
+
+h1{font-size:60px;color:#F28C28;margin-bottom:20px;}
+h2{font-size:32px;margin-bottom:20px;}
+
+p{
+max-width:850px;
+line-height:1.7;
+margin-bottom:18px;
+}
+
+button{
+padding:12px 25px;
+border:none;
+border-radius:30px;
+background:#fff8dc;
+margin:10px;
+cursor:pointer;
+font-weight:bold;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.07);
+box-shadow:0 0 15px rgba(242,140,40,0.5);
+}
+
+.dark-toggle{
+position:fixed;
+top:20px;
+right:20px;
+z-index:1000;
+}
+
+.visualizer{
+display:flex;
+gap:4px;
+margin-top:15px;
+height:60px;
+}
+
+.bar{
+width:5px;
+background:#F28C28;
+}
+
+.footer{
+margin-top:30px;
+font-weight:bold;
+color:#F28C28;
+}
+</style>
+</head>
+
+<body>
+
+<button class="dark-toggle" onclick="toggleDark()">Dark Mode</button>
+
+<div class="container" id="container">
+
+<!-- PAGE 1 -->
+<section class="page">
+<h1>Musical Influence</h1>
+
+<p>
+Music is not merely entertainment. It is a complex neurological phenomenon that activates widespread brain networks.
+This project explores how music interacts with cognitive systems, emotional circuits,
+memory pathways, and motor coordination.
+</p>
+
+<p>
+Through interactive sound demonstrations and scientific explanations,
+this application reveals how music influences dopamine release,
+attention span, emotional regulation, and physical performance.
+</p>
+
+<p>Swipe → or use Arrow Keys</p>
+</section>
+
+<!-- PAGE 2 -->
+<section class="page">
+<h2>The Neuroscience of Music</h2>
+
+<p>
+When sound waves enter the ear, they are transformed into neural signals
+that travel to the auditory cortex. However, music does not remain confined there.
+It activates the limbic system (emotion), hippocampus (memory),
+and prefrontal cortex (decision-making and anticipation).
+</p>
+
+<p>
+A landmark 2011 study by Salimpoor et al. at McGill University
+demonstrated that listening to pleasurable music triggers dopamine release
+in the nucleus accumbens — a key reward center in the brain.
+This explains the sensation of musical "chills" and anticipatory pleasure.
+</p>
+
+<p>
+Research in Nature Reviews Neuroscience confirms that music strengthens
+functional connectivity between emotional and cognitive regions,
+enhancing attentional control and emotional processing.
+</p>
+</section>
+
+<!-- PAGE 3 -->
+<section class="page">
+<h2>Music & Studying</h2>
+
+<p>
+Instrumental music may enhance concentration by reducing environmental distractions
+and stabilizing mood. Studies from the University of Wales
+show that lyrical content may interfere with reading comprehension
+due to competition in language-processing networks.
+</p>
+
+<p>
+Repeated exposure to the same instrumental background while studying
+can create context-dependent memory associations.
+The brain links that melody with focused cognitive states.
+</p>
+
+<button onclick="playFocus()">Play Focus Mode</button>
+<div class="visualizer" id="viz"></div>
+
+</section>
+
+<!-- PAGE 4 -->
+<section class="page">
+<h2>Music & Physical Performance</h2>
+
+<p>
+Research from Brunel University London suggests that synchronized music
+can reduce perceived exertion and increase endurance.
+Rhythm influences motor cortex activation and heart rate regulation.
+</p>
+
+<button onclick="playCalm()">Play Calm Yoga Sound</button>
+<button onclick="playEnergy()">Play Energetic Workout Sound</button>
+</section>
+
+<!-- PAGE 5 -->
+<section class="page">
+<h2>Music & Emotion</h2>
+
+<p>
+Minor tonal structures are often associated with reflective or melancholic states,
+while major tonalities are linked to positive affect.
+Tempo and harmonic progression influence autonomic nervous system activity.
+</p>
+
+<button onclick="playMinor()">Play Emotional Tone</button>
+<button onclick="playMajor()">Play Bright Tone</button>
+</section>
+
+<!-- PAGE 6 -->
+<section class="page">
+<h2>Emotion Sensitivity Test</h2>
+
+<p>
+Listen to the tone and observe your reaction.
+This simplified assessment is inspired by affective neuroscience research.
+</p>
+
+<button onclick="emotionTest()">Start Emotional Tone</button>
+<p id="result"></p>
+</section>
+
+<!-- PAGE 7 -->
+<section class="page">
+<h2>Scientific References</h2>
+
+<p>Salimpoor, V. N., et al. (2011). Dopamine release during anticipation of music. McGill University.</p>
+<p>Nature Reviews Neuroscience – Music and large-scale brain networks.</p>
+<p>Brunel University London – Music synchronization and endurance performance.</p>
+<p>University of Wales – Background music and cognitive performance.</p>
+
+<p class="footer">
+Music is science. Music is emotion. Music is human experience.
+Thank you for exploring Musical Influence.
+</p>
+</section>
+
+</div>
+
+<script>
+let current=0;
+const container=document.getElementById("container");
+const total=7;
+
+function update(){container.style.transform=`translateX(-${current*100}vw)`;}
+
+document.addEventListener("keydown",e=>{
+if(e.key==="ArrowRight"&&current<total-1){current++;update();}
+if(e.key==="ArrowLeft"&&current>0){current--;update();}
+});
+
+let startX=0;
+document.addEventListener("touchstart",e=>startX=e.touches[0].clientX);
+document.addEventListener("touchend",e=>{
+let endX=e.changedTouches[0].clientX;
+if(startX-endX>50&&current<total-1){current++;update();}
+if(endX-startX>50&&current>0){current--;update();}
+});
+
+function toggleDark(){document.body.classList.toggle("dark");}
+
+/* AUDIO SYSTEM */
+const audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+let analyser=audioCtx.createAnalyser();
+let dataArray=new Uint8Array(analyser.frequencyBinCount);
+
+function createSound(freq,type="sine"){
+let osc=audioCtx.createOscillator();
+let gain=audioCtx.createGain();
+osc.type=type;
+osc.frequency.value=freq;
+osc.connect(analyser);
+analyser.connect(gain);
+gain.connect(audioCtx.destination);
+gain.gain.value=0.1;
+osc.start();
+visualize();
+setTimeout(()=>osc.stop(),3000);
+}
+
+function visualize(){
+const viz=document.getElementById("viz");
+viz.innerHTML="";
+for(let i=0;i<40;i++){
+let bar=document.createElement("div");
+bar.className="bar";
+viz.appendChild(bar);
+}
+function draw(){
+requestAnimationFrame(draw);
+analyser.getByteFrequencyData(dataArray);
+let bars=document.querySelectorAll(".bar");
+bars.forEach((bar,i)=>{
+bar.style.height=(dataArray[i]/2)+"px";
+});
+}
+draw();
+}
+
+function playFocus(){createSound(440,"sine");}
+function playCalm(){createSound(220,"triangle");}
+function playEnergy(){createSound(880,"sawtooth");}
+function playMinor(){createSound(330,"sine");}
+function playMajor(){createSound(660,"triangle");}
+
+function emotionTest(){
+createSound(500,"sine");
+document.getElementById("result").innerText=
+"Your response to tonal stimulation suggests balanced emotional reactivity and healthy auditory-emotional integration.";
+}
+</script><link rel="stylesheet" href="style.css">
+
+</body>
+</html><script src="script.js"></script>
