@@ -122,4 +122,34 @@ note.innerHTML="♪";
 note.style.left=Math.random()*100+"vw";
 note.style.animationDuration=(8+Math.random()*10)+"s";
 document.body.appendChild(note);
+}/* Loading + Intro Logic */
+
+window.addEventListener("load",()=>{
+
+let loading=document.getElementById("loadingScreen");
+let intro=document.getElementById("introScreen");
+
+setTimeout(()=>{
+loading.style.display="none";
+intro.style.opacity="1";
+intro.style.pointerEvents="auto";
+
+setTimeout(()=>{
+intro.style.display="none";
+},3000);
+
+},3000);
+
+});
+
+/* Visitor Counter */
+
+if(localStorage.getItem("visits")==null){
+localStorage.setItem("visits",1);
+}else{
+let count=parseInt(localStorage.getItem("visits"));
+localStorage.setItem("visits",count+1);
 }
+
+document.getElementById("visitorCount").innerText=
+"Visitors: "+localStorage.getItem("visits");
